@@ -15,7 +15,7 @@
     "react-notification-alert": "0.0.13",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
-    "react-scripts": "5.0.0"
+    "react-scripts": "^5.0.0"
   },
   "optionalDependencies": {
     "jquery": "3.5.1",
