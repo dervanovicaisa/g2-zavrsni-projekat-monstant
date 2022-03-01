@@ -16,7 +16,7 @@
 
 */
 import Dashboard from "views/Dashboard.js";
-import FilterDataOfPopulation from "routes/FilterDataOfPopulation.js";
+import FilterData from "routes/FilterData.js";
 import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
 import Icons from "views/Icons.js";
@@ -36,21 +36,21 @@ const dashboardRoutes = [
     path: "/podaciostanovnistvu",
     name: "Podaci o stanovnštvu",
     icon: "",
-    component: FilterDataOfPopulation,
+    component: FilterData,
     layout: "/admin",
   },
   {
     path: "/podaciodomacinstivma",
     name: "Podaci  o domaćinstivma",
     icon: "",
-    component: TableList,
+    component: FilterData,
     layout: "/admin",
   },
   {
     path: "/podaciostanovima",
     name: "Podaci o stanovima",
     icon: "",
-    component: Typography,
+    component: FilterData,
     layout: "/admin",
   },
   {
