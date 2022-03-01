@@ -111,7 +111,7 @@ const Filter = ({ title, categories, id }) => {
       query.filter = filter.filter;
     }
 
-    Axios.get("/podaciostanovnistvu/", { params: JSON.stringify(query) })
+    Axios.get(history.location.pathname, { params: JSON.stringify(query) })
       .then(function (response) {
         setData(response.data);
         // console.log(response.data.data, JSON.stringify(query));
