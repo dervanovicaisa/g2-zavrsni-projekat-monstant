@@ -68,7 +68,7 @@ function Header() {
           <span className="navbar-toggler-bar burger-lines"></span>
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="nav mr-auto" navbar>
+          {/* <Nav className="nav mr-auto" navbar>
             <Nav.Item>
               <Nav.Link
                 data-toggle="dropdown"
@@ -125,19 +125,19 @@ function Header() {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            <Nav.Item>
+            <Nav.Item className="float-right">
               <Nav.Link
                 className="m-0"
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
                 <i className="nc-icon nc-zoom-split"></i>
-                <span className="d-lg-block"> Search</span>
+                <span className="d-lg-block">Pretraga</span>
               </Nav.Link>
             </Nav.Item>
-          </Nav>
+          </Nav> */}
           <Nav className="ml-auto" navbar>
-            <Nav.Item>
+            {/* <Nav.Item>
               <Nav.Link
                 className="m-0"
                 href="#pablo"
@@ -145,7 +145,7 @@ function Header() {
               >
                 <span className="no-icon">Account</span>
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle
                 aria-expanded={false}
@@ -156,7 +156,7 @@ function Header() {
                 variant="default"
                 className="m-0"
               >
-                <span className="no-icon">Dropdown</span>
+                <span className="no-icon">Monsdatar</span>
               </Dropdown.Toggle>
               <Dropdown.Menu aria-labelledby="navbarDropdownMenuLink">
                 <Dropdown.Item
@@ -198,7 +198,7 @@ function Header() {
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
-                <span className="no-icon">Log out</span>
+                <span className="no-icon">Prijavi se</span>
               </Nav.Link>
             </Nav.Item>
           </Nav>
