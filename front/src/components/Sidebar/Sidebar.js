@@ -36,16 +36,17 @@ function Sidebar({ color, image, routes }) {
         }}
       />
       <div className="sidebar-wrapper">
-        <div className="logo d-flex align-items-center justify-content-start">
-          <a
-            href="https://www.creative-tim.com?ref=lbd-sidebar"
-            className="simple-text logo-mini mx-1"
-          >
+        <div className="logo ">
+          <a className="simple-text logo-mini mx-1">
             <div className="logo-img">
-              <img src={logo} alt="..." />
+              <img
+                src={logo}
+                alt="..."
+                style={{ maxHeight: "80px", maxWidth: "200px" }}
+              />
             </div>
           </a>
-          <a className="simple-text">Monsdatar</a>
+          {/* <p className="simple-text">Monsdatar</p> */}
         </div>
         <Nav>
           {routes.map((prop, key) => {
