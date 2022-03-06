@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import * as Icon from "react-bootstrap-icons";
 import * as queryString from "query-string";
 import { Doughnut, Line, Pie, Bar } from "react-chartjs-2";
+import {
+  getAllCities,
+  getAllLabels,
+  getDetailReport,
+  randomRGBA,
+} from "helpers/functions";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -27,52 +33,72 @@ ChartJS.register(
   LineElement
 );
 const Filter = ({ title, categories, id }) => {
-  let [data, setData] = useState();
+  let [labels, setLabels] = useState([]);
+  let [filterGraph, setFilterGraph] = useState("3");
+
+  let [data, setData] = useState(["a"]);
   let [filter, setFilter] = useState();
   let [loading, setLoading] = useState(false);
   let [errors, setErrors] = useState({});
   let history = useHistory();
   let params = useParams();
+
+  const backgroundColors = [
+    "rgba(255, 99, 132, 0.5)",
+    "rgba(54, 162, 235, 0.5)",
+    "rgba(255, 206, 86, 0.5)",
+    "rgba(75, 192, 192, 0.5)",
+    "rgba(153, 102, 255, 0.5)",
+    "rgba(255, 159, 64, 0.5)",
+    "rgb(102, 153, 255, 0.5)",
+    "rgb(255, 255, 153, 0.5)",
+    "rgb(0, 204, 0, 0.5)",
+    "rgb(0, 153, 204, 0.5)",
+    "rgb(173, 51, 255, 0.5)",
+  ];
+  const borderColors = [
+    "rgba(255, 99, 132, 1)",
+    "rgba(54, 162, 235, 1)",
+    "rgba(255, 206, 86, 1)",
+    "rgba(75, 192, 192, 1)",
+    "rgba(153, 102, 255, 1)",
+    "rgba(255, 159, 64, 1)",
+    "rgb(102, 153, 255, 1)",
+    "rgb(255, 255, 153, 1)",
+    "rgb(0, 204, 0, 1)",
+    "rgb(0, 153, 204, 1)",
+    "rgb(173, 51, 255, 1)",
+  ];
   const fkdata = {
-    labels: [
-      "Racunarska pismenost",
-      "Strani jezici",
-      "Stepen obrazovanja",
-      "Pol",
-      "Drzavljantstvo",
-      "Prema aktivnosti",
-      "Bracni status",
-      "Gradovi",
-    ],
+    labels: labels,
     datasets: [
       {
         label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
+        data: [125, 125, 643, 25, 634, 123, 222],
+        backgroundColor: [],
+        borderColor: [],
         borderWidth: 1,
       },
     ],
   };
 
+  let [dataToShow, setDataToShow] = useState({
+    labels: labels,
+    datasets: [
+      {
+        label: "",
+        data: [],
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 1,
+      },
+    ],
+  });
   //   functions
 
   const selectHandlerGraph = (e) => {
-    setFilter(e.target.value);
+    console.log(e.target.value);
+    setFilterGraph(e.target.value);
   };
 
   const selectHandler = (val) => {
@@ -82,23 +108,29 @@ const Filter = ({ title, categories, id }) => {
   };
   const handleChangeFilter = (e) => {
     const { value } = e.target;
+    console.log(e.target);
     let newValues = { ...filter };
+
     if (!value) {
       delete newValues[value];
     } else {
       newValues[value] = value;
     }
+    console.log(newValues);
     setFilter(newValues);
   };
 
   const search = () => {
     setFilter({ ...filter });
-    loadData();
+    callHelpFunctions();
+
+    // loadData();
   };
 
   const refresh = () => {
     setFilter({ ...filter });
-    loadData();
+    callHelpFunctions();
+    // loadData();
   };
 
   const loadData = () => {
@@ -122,6 +154,72 @@ const Filter = ({ title, categories, id }) => {
       .then(function () {});
   };
 
+  function callHelpFunctions() {
+    var selectedCategory = id;
+
+    switch (selectedCategory) {
+      case "Pol":
+        setLabels(["Musko", "Zensko"]);
+        getDetailReport(setData, "pol");
+        break;
+      case "nationality":
+        getAllLabels(setLabels, "drzavljanstva");
+        getDetailReport(setData, "drzavljanstvo");
+        break;
+      case "populationbyreligion":
+        getAllLabels(setLabels, "vjeroispovijesti");
+        getDetailReport(setData, "vjeroispovijest");
+        break;
+      case "mothertongue":
+        getAllLabels(setLabels, "maternji-jezici");
+        getDetailReport(setData, "jezik");
+        break;
+      case "Bracni status":
+        getAllLabels(setLabels, "bracni-statusi");
+        getDetailReport(setData, "bracni_status");
+        break;
+      case "degreeofeducation":
+        getAllLabels(setLabels, "stepeni-obrazovanja");
+        getDetailReport(setData, "obrazovanje");
+        break;
+      case "Računarska pismenost":
+        getAllLabels(setLabels, "racunarske-pismenosti");
+        getDetailReport(setData, "racunarska_pismenost");
+        break;
+    }
+  }
+
+  useEffect(() => {
+    callHelpFunctions();
+    setDataToShow({
+      labels: labels,
+      datasets: [
+        {
+          label: "# of Votes",
+          data: data.map((el) => el["count"]),
+          backgroundColor: backgroundColors,
+          borderColor: borderColors,
+          borderWidth: 1,
+        },
+      ],
+    });
+  }, []);
+
+  useEffect(() => {
+    // callHelpFunctions();
+    setDataToShow({
+      labels: labels,
+      datasets: [
+        {
+          label: "Broj stanovnika",
+          data: data.map((el) => el["count"]),
+          backgroundColor: backgroundColors,
+          borderColor: borderColors,
+          borderWidth: 1,
+        },
+      ],
+    });
+  }, [labels, data]);
   return (
     <>
       <Col>
@@ -133,22 +231,14 @@ const Filter = ({ title, categories, id }) => {
         </Row>
         <Row>
           <Col className="p-2">
-            <Form.Control
-              as="select"
-              id="graph"
-              onChange={selectHandlerGraph}
-              value="0"
-            >
-              <option value="0" name="Izaberite graf">
-                Izaberite graf
-              </option>
+            <Form.Control as="select" id="graph" onChange={selectHandlerGraph}>
               <option value="1" name="Doughnut graf">
                 Doughnut graf
               </option>
               <option value="2" name="Pie graf">
                 Pie graf
               </option>
-              <option value="3" name="Bar graf">
+              <option value="3" name="Bar graf" selected>
                 Bar graf
               </option>
             </Form.Control>
@@ -415,12 +505,12 @@ const Filter = ({ title, categories, id }) => {
         </Row>
       </Col>
       <Col>
-        {filter == 1 ? (
-          <Doughnut data={fkdata} />
-        ) : filter == 2 ? (
-          <Pie data={fkdata} />
-        ) : filter == 3 ? (
-          <Bar data={fkdata} />
+        {filterGraph == 1 ? (
+          <Doughnut data={dataToShow} />
+        ) : filterGraph == 2 ? (
+          <Pie data={dataToShow} />
+        ) : filterGraph == 3 ? (
+          <Bar data={dataToShow} />
         ) : null}
       </Col>
     </>
