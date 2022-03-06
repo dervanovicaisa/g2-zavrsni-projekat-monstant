@@ -97,7 +97,7 @@ const Filter = ({ title, categories, id }) => {
   };
 
   const refresh = () => {
-    setFilter({ ...filter });
+    setFilter({});
     loadData();
   };
 
@@ -393,7 +393,7 @@ const Filter = ({ title, categories, id }) => {
             </Form.Control>
           </Col>
         </Row>
-        <Row className="float-right">
+        <Row style={{ float: "right" }}>
           <Col className="p-2">
             <Button
               type="submit"
@@ -420,8 +420,17 @@ const Filter = ({ title, categories, id }) => {
         ) : filter == 2 ? (
           <Pie data={fkdata} />
         ) : filter == 3 ? (
-          <Bar data={fkdata} />
-        ) : null}
+          <Bar data={fkdata} style={{ paddingTop: "20vh" }} />
+        ) : (
+          <lottie-player
+            src="https://assets5.lottiefiles.com/packages/lf20_ycr48O.json"
+            background="transparent"
+            speed="1"
+            style={{ width: "400px", height: "90vh", margin: "auto" }}
+            loop
+            autoplay
+          ></lottie-player>
+        )}
       </Col>
     </>
   );
