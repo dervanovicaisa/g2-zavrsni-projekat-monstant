@@ -31,6 +31,8 @@ function Demographic() {
     "Vjeroispovijest",
     "Maternji jezik",
     "Bracni status",
+    "Računarska pismenost",
+    "Stepen obrazovanja",
   ];
 
   const [cities, setCities] = useState([]);
@@ -41,6 +43,11 @@ function Demographic() {
     "rgba(75, 192, 192, 0.5)",
     "rgba(153, 102, 255, 0.5)",
     "rgba(255, 159, 64, 0.5)",
+    "rgb(102, 153, 255, 0.5)",
+    "rgb(255, 255, 153, 0.5)",
+    "rgb(0, 204, 0, 0.5)",
+    "rgb(0, 153, 204, 0.5)",
+    "rgb(173, 51, 255, 0.5)",
   ]);
   const [borderColorsOfLabels, setBorderColorsOfLabels] = useState([
     "rgba(255, 99, 132, 1)",
@@ -49,6 +56,11 @@ function Demographic() {
     "rgba(75, 192, 192, 1)",
     "rgba(153, 102, 255, 1)",
     "rgba(255, 159, 64, 1)",
+    "rgb(102, 153, 255, 1)",
+    "rgb(255, 255, 153, 1)",
+    "rgb(0, 204, 0, 1)",
+    "rgb(0, 153, 204, 1)",
+    "rgb(173, 51, 255, 1)",
   ]);
   const [labels, setLabels] = useState([
     "Red",
@@ -64,22 +76,8 @@ function Demographic() {
       {
         // label: "# of Votes",
         data: [12, 19],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.8)",
-          "rgba(54, 162, 235, 0.8)",
-          "rgba(255, 206, 86, 0.8)",
-          "rgba(75, 192, 192, 0.8)",
-          "rgba(153, 102, 255, 0.8)",
-          "rgba(255, 159, 64, 0.8)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
+        backgroundColor: colorsOfLables,
+        borderColor: borderColorsOfLabels,
         borderWidth: 1,
       },
     ],
@@ -110,27 +108,13 @@ function Demographic() {
       return {
         name: el.naziv,
         data: {
-          labels: labels,
+          labels: [...new Set(data.map((el) => Object.values(el)[1]))],
           datasets: [
             {
               // label: "# of Votes",
               data: dataForSeed,
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.8)",
-                "rgba(54, 162, 235, 0.8)",
-                "rgba(255, 206, 86, 0.8)",
-                "rgba(75, 192, 192, 0.8)",
-                "rgba(153, 102, 255, 0.8)",
-                "rgba(255, 159, 64, 0.8)",
-              ],
-              borderColor: [
-                "rgba(255, 99, 132, 1)",
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)",
-              ],
+              backgroundColor: colorsOfLables,
+              borderColor: borderColorsOfLabels,
               borderWidth: 1,
             },
           ],
@@ -139,27 +123,14 @@ function Demographic() {
     });
 
     var seedData = dataForCountry.map((el) => el["count"]);
+
     var countrySeeder = {
-      labels: labels,
+      labels: dataForCountry.map((el) => Object.values(el)[0]),
       datasets: [
         {
           data: seedData,
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.8)",
-            "rgba(54, 162, 235, 0.8)",
-            "rgba(255, 206, 86, 0.8)",
-            "rgba(75, 192, 192, 0.8)",
-            "rgba(153, 102, 255, 0.8)",
-            "rgba(255, 159, 64, 0.8)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-          ],
+          backgroundColor: colorsOfLables,
+          borderColor: borderColorsOfLabels,
           borderWidth: 1,
         },
       ],
@@ -179,7 +150,12 @@ function Demographic() {
       return {
         name: el.naziv,
         data: {
-          labels: labels,
+          labels: [
+            ...new Set(
+              data.map((elementOfData) => Object.values(elementOfData)[1])
+            ),
+          ],
+
           datasets: [
             {
               // label: "# of Votes",
@@ -195,7 +171,7 @@ function Demographic() {
 
     var seedData = dataForCountry.map((el) => el["count"]);
     var countrySeeder = {
-      labels: labels,
+      labels: dataForCountry.map((el) => Object.values(el)[0]),
       datasets: [
         {
           data: seedData,
@@ -206,17 +182,17 @@ function Demographic() {
       ],
     };
 
-    var colors = [];
-    var borderColors = [];
-    for (var i = 0; i < labels.length; i++) {
-      var color = randomRGBA(0.5);
-      var borderColor = randomRGBA(1);
-      colors.push(color);
-      borderColors.push(borderColor);
-    }
+    // var colors = [];
+    // var borderColors = [];
+    // for (var i = 0; i < labels.length; i++) {
+    //   var color = randomRGBA(0.5);
+    //   var borderColor = randomRGBA(1);
+    //   colors.push(color);
+    //   borderColors.push(borderColor);
+    // }
 
-    setColorsOfLabels(colors);
-    setBorderColorsOfLabels(borderColors);
+    // setColorsOfLabels(colors);
+    // setBorderColorsOfLabels(borderColors);
     setFinalDataForCountry(countrySeeder);
     setFinalData(temp);
   }, [labels, data]);
@@ -244,6 +220,14 @@ function Demographic() {
         getAllLabels(setLabels, "bracni-statusi");
         getAllIzvjestaj(setData, setDataForCountry, "bracni_status");
         break;
+      case "Stepen obrazovanja":
+        getAllLabels(setLabels, "stepeni-obrazovanja");
+        getAllIzvjestaj(setData, setDataForCountry, "obrazovanje");
+        break;
+      case "Računarska pismenost":
+        getAllLabels(setLabels, "racunarske-pismenosti");
+        getAllIzvjestaj(setData, setDataForCountry, "racunarska_pismenost");
+        break;
     }
   }
   function showCountryChart() {
@@ -255,6 +239,17 @@ function Demographic() {
           </Card.Header>
           <Card.Body>
             <Pie data={finalDataForCountry} />
+
+            <hr></hr>
+            <div className="stats">
+              Ukupno stanovika:
+              <b>
+                {finalDataForCountry.datasets[0].data.reduce(
+                  (partialSum, a) => partialSum + a,
+                  0
+                )}
+              </b>
+            </div>
           </Card.Body>
         </Card>
       </Col>
@@ -346,6 +341,16 @@ function Demographic() {
                   </Card.Header>
                   <Card.Body>
                     <Pie options={options} data={el.data} />
+                    <hr></hr>
+                    <div className="stats">
+                      Ukupno stanovika:
+                      <b>
+                        {el.data.datasets[0].data.reduce(
+                          (partialSum, a) => partialSum + a,
+                          0
+                        )}
+                      </b>
+                    </div>
                   </Card.Body>
                 </Card>
               </Col>

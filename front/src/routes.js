@@ -18,14 +18,14 @@ const dashboardRoutes = [
   },
   {
     path: "/demographic",
-    name: "Demografski podaci",
-    icon: "nc-icon nc-chart-pie-36",
+    name: "Opšti podaci o stanovnštvu",
+    icon: "",
     component: Demographic,
     layout: "/admin",
   },
   {
     path: "/podaciostanovnistvu",
-    name: "Podaci o stanovnštvu",
+    name: "Detaljni podaci o stanovnštvu",
     icon: "",
     component: FilterData,
     layout: "/admin",
@@ -44,13 +44,13 @@ const dashboardRoutes = [
     component: FilterData,
     layout: "/admin",
   },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "",
-    component: Notifications,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: "",
+  //   component: Notifications,
+  //   layout: "/admin",
+  // },
   // {
   //   path: "/user",
   //   name: "User Profile",
