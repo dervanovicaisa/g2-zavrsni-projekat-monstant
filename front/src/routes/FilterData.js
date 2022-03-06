@@ -28,7 +28,7 @@ export default function FilterDataOfPopulation() {
       <Row>
         <Col>
           <Tabs
-            defaultActiveKey="podaci"
+            defaultActiveKey="nacionalnost"
             id="uncontrolled-tab-example"
             className="mb-3"
           >

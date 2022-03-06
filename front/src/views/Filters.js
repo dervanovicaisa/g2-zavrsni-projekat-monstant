@@ -128,9 +128,10 @@ const Filter = ({ title, categories, id }) => {
   };
 
   const refresh = () => {
-    setFilter({ ...filter });
+  setFilter({ ...filter });
     callHelpFunctions();
     // loadData();
+
   };
 
   const loadData = () => {
@@ -483,7 +484,7 @@ const Filter = ({ title, categories, id }) => {
             </Form.Control>
           </Col>
         </Row>
-        <Row className="float-right">
+        <Row style={{ float: "right" }}>
           <Col className="p-2">
             <Button
               type="submit"
@@ -505,13 +506,24 @@ const Filter = ({ title, categories, id }) => {
         </Row>
       </Col>
       <Col>
-        {filterGraph == 1 ? (
+
+        {filter == 1 ? (
           <Doughnut data={dataToShow} />
-        ) : filterGraph == 2 ? (
+        ) : filter == 2 ? (
           <Pie data={dataToShow} />
-        ) : filterGraph == 3 ? (
-          <Bar data={dataToShow} />
-        ) : null}
+        ) : filter == 3 ? (
+          <Bar data={dataToShow} style={{ paddingTop: "20vh" }} />
+        ) : (
+          <lottie-player
+            src="https://assets5.lottiefiles.com/packages/lf20_ycr48O.json"
+            background="transparent"
+            speed="1"
+            style={{ width: "400px", height: "90vh", margin: "auto" }}
+            loop
+            autoplay
+          ></lottie-player>
+        )}
+
       </Col>
     </>
   );
